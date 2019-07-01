@@ -10,7 +10,7 @@ class SubscriptionMail {
 
     await Mail.sendMail({
       to: `${owner.name} <${owner.email}>`,
-      subject: 'Usuario inscrito ao seu meetup',
+      subject: 'Usuário inscrito ao seu meetup',
       template: 'subscription',
       context: {
         owner: owner.name,
