@@ -23,10 +23,12 @@ class OwnerController {
       include: [
         {
           model: User,
+          as: 'user',
           attributes: ['name', 'email'],
         },
         {
           model: File,
+          as: 'banner',
           attributes: ['path', 'url'],
         },
       ],
