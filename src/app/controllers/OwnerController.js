@@ -8,7 +8,9 @@ class OwnerController {
 
     // If there is no date especified list just for the current user
     const meetups = await Meetup.findAll({
-      where: { user_id: req.UserId },
+      where: req.params.id
+        ? { user_id: req.UserId, id: req.params.id }
+        : { user_id: req.UserId },
       order: ['date'],
       attributes: [
         'id',
@@ -33,7 +35,6 @@ class OwnerController {
         },
       ],
     });
-
     return res.json(meetups);
   }
 }

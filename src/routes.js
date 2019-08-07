@@ -30,6 +30,7 @@ routes.post('/meetups/:id/subscribe', SubscriptionController.store);
 routes.get('/subscriptions', SubscriptionController.index);
 
 routes.get('/mymeetups', OwnerController.index);
+routes.get('/mymeetups/:id', OwnerController.index);
 
 // routes.post('/subscription', SubscriptionController.store);
 
