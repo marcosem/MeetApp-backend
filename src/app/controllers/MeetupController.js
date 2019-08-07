@@ -10,7 +10,7 @@ import File from '../models/File';
 class MeetupController {
   async index(req, res) {
     const { page = 1, date } = req.query;
-    const where = req.params.id ? `{id: ${req.params.id}}` : {};
+    const where = req.params.id ? { id: `${req.params.id}` } : {};
 
     if (date) {
       const parsedDate = parseISO(date);
