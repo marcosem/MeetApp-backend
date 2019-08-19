@@ -101,7 +101,7 @@ class SubscriptionController {
       // Already subscribed
       if (verifyDuplicatedDate.meetup_id === Number(req.params.id)) {
         return res.status(400).json({
-          error: 'You area already subscribed to this meetup',
+          error: 'You are already subscribed to this meetup',
         });
       }
 
