@@ -135,6 +135,30 @@ class SubscriptionController {
 
     return res.json(subscription);
   }
+
+  async delete(req, res) {
+    const subscription = await Subscription.findByPk(req.params.id);
+
+    // Didn't file the meetup id
+    if (!subscription) {
+      return res.status(400).json({ error: 'Record not found' });
+    }
+
+    if (subscription.user_id !== req.UserId) {
+      return res.status(401).json({ error: 'Permission Denied' });
+    }
+
+    await Subscription.destroy({ where: { id: req.params.id } }).then(
+      deletedRecord => {
+        if (deletedRecord === 1) {
+          return res.status(200).json({ message: 'Deleted successfully' });
+        }
+        return res.status(404).json({ error: 'Record not found' });
+      }
+    );
+
+    return res.status(200);
+  }
 }
 
 export default new SubscriptionController();
