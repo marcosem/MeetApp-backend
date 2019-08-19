@@ -3,10 +3,12 @@ import Meetup from '../models/Meetup';
 import User from '../models/User';
 import Subscription from '../models/Subscrition';
 import SubscriptionMail from '../jobs/SubscriptionMail';
+import File from '../models/File';
 import Queue from '../../lib/Queue';
 
 class SubscriptionController {
   async index(req, res) {
+    /*
     const subscriptions = await Subscription.findAll({
       where: {
         user_id: req.UserId,
@@ -20,6 +22,38 @@ class SubscriptionController {
             },
           },
           attributes: ['title', 'description', 'location', 'date'],
+          required: true,
+        },
+      ],
+      order: [[Meetup, 'date']],
+    });
+*/
+    // If there is no date especified list just for the current user
+    const subscriptions = await Subscription.findAll({
+      where: {
+        user_id: req.UserId,
+      },
+      include: [
+        {
+          model: Meetup,
+          where: {
+            date: {
+              [Op.gt]: new Date(), // only dates before now
+            },
+          },
+          attributes: ['id', 'title', 'description', 'location', 'date'],
+          include: [
+            {
+              model: User,
+              as: 'user',
+              attributes: ['name', 'email'],
+            },
+            {
+              model: File,
+              as: 'banner',
+              attributes: ['id', 'path', 'url'],
+            },
+          ],
           required: true,
         },
       ],
